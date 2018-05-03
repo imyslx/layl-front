@@ -1,0 +1,67 @@
+<!doctype html>
+
+@extends('layouts.app')
+
+@section('css')
+    @loadLocalCSS(/css/index.css)
+    @loadLocalCSS(/css/index_mobile.css)
+@endsection
+
+@section('content')
+<content-head>
+  <div class="flex-center position-ref">
+    <div class="content title m-t">
+       [ LAYL ] <br /> Log All of Your Life.
+    </div>
+  </div>
+</content-head>
+<hr />
+<main>
+  <svcdesc class="clearfix">
+    <h2 id=desc>
+      -- あなたの「人生のすべて」を記録しましょう。
+    </h2>
+    <div id="svc-detail" class="flex-center">
+      LAYLは非公開なタイプのライフログツールです。<br />
+      オープンなコミュニティへは流せないようなモノまで含めて、<br />
+      あなたの「人生のすべて」を記録します。<br />
+    </div>
+  </svcdesc>
+
+  <svccontents class="clearfix">
+    <div class="item clearfix">
+      <p class=i-title>つぶやき</p>
+      <p>その日の気分や天気。<br />良かったこと悪かったこと。<br />小さな日常を残しましょう。</p>
+    </div>
+    <div class=item>
+      <p class=i-title>日記</p>
+      <p>誰に見られることもありません。<br />想いのままの一日を記録しましょう</p>
+    </div>
+    <div class=item>
+      <p class=i-title>スケジュール</p>
+      <p>予定を記録しましょう。<br />日記やイベントと連携して、<br />いつ何をしたのか残しましょう。</p>
+    </div>
+    <div class=item>
+      <p class=i-title>イベント</p>
+      <p>日常を描く日記とは少し違う、<br />特別な日をアルバムと一緒に。</p>
+    </div>
+  </svccontents>
+
+<!--    <table id=svc-desc-table>
+      <tr>
+        <th>つぶやき</th><td>その日の気分、天気。<br />楽しいかったことや嬉しかったこと。<br />日常のちょっとした愚痴。<br />日記までいかないような、でもちょっとした日常を残しましょう。</td>
+      </tr><tr>
+        <th>日記</th><td>一日の終わりに。一日の始まりに。<br />1日の出来事や気持ちを整理しましょう。</td>
+      </tr><tr>
+        <th>スケジュール</th><td>お出かけの予定や</td>
+      </tr><tr>
+        <th>イベント</th><td>旅行アルバムを作りましょう。</td>
+      </tr><tr>
+        <th>つぶやき</th><td>i</td>
+      </tr>
+    </table>
+-->
+  </svccontents>
+</main>
+@endsection
+

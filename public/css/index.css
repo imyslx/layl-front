@@ -1,0 +1,70 @@
+.title {
+    color: #636b6f;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 100;
+    font-size: 3em;
+    text-align: center;
+}
+
+.m-t {
+    margin: 15px;
+}
+
+main {
+    width: 800px;
+    margin: 15px 10px;
+    margin: auto;
+
+    font-size: 1.2em;
+    font-family: "ＭＳ ゴシック",sans-serif;
+}
+
+main svcdesc {
+    display:block;
+    margin-bottom: 1.5em;
+}
+
+main svcdesc h2 {
+    font-size: 2vw;
+    margin-bottom: 1.5em;
+}
+
+main svcdesc #svc-detail {
+    display: block;
+    border: 1px solid #636b6f;
+    border-radius: 5px;
+
+    padding: 1.4em;
+}
+
+main svccontents {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+}
+
+main svccontents .item {
+    width: 90%;
+    display:block;
+    float: left;
+    position: relative;
+    border: 3px solid #636b6f;
+    border-radius: 1em;
+    padding: 2vw 5%;
+    margin: 1vw 5%;
+
+    text-align: center;
+}
+
+
+main svccontents div.item p {
+    margin-bottom: 0;
+    font-size: 1em;
+}
+
+main svccontents div.item p.i-title {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+

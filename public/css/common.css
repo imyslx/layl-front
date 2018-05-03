@@ -1,0 +1,36 @@
+html, body {
+    background-color: #fff;
+    height: 100vh;
+    margin: 0;
+}
+
+.clearfix:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.position-ref {
+    position: relative;
+}
+
+.navbar {
+    background-color: #333;
+}
+
+.navbar .navbar-brand,
+.navbar-light .navbar-nav .nav-link,
+.navbar .navbar-text {
+    color: white;
+}
+
+.nav>li, .nav>li>a {
+    border-left: 1px solid #999;
+}
+

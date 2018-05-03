@@ -1,0 +1,29 @@
+div.row-table-head {
+  border: solid 1px black;
+}
+
+div.margin-bottom {
+  margin-bottom: 0.5rem;
+}
+
+div.right {
+  text-align: right;
+}
+
+.card-body {
+  padding: 0.75rem 1rem 0.25rem 1rem;
+}
+
+li.list-group-item-head {
+  font-weight: bold;
+}
+
+.list-group-item {
+  padding: 0.5rem 0.75rem;
+}
+li.list-group-item span.date {
+  color:gray;
+  font-size: .8rem;
+  display: block;
+  text-align: right;
+}

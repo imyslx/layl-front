@@ -1,0 +1,46 @@
+@media screen and (max-width: 1024px) {
+
+.title {
+    font-size: 7.5vw;
+}
+
+hr {
+    margin: 10px 0 ;
+}
+
+main {
+    width: 96%;
+    margin-left:  2%;
+    margin-right: 2%;
+}
+
+main svcdesc h2 {
+    font-size: 4vw;
+    margin-bottom: 1.5em;
+}
+
+main svcdesc #svc-detail {
+    margin: 3vw;
+    font-size: 3vw;
+}
+
+main svccontents .item {
+    display: block;
+    width: 90%;
+
+    padding: 2vw 5%;
+    margin: 2vw 5%;
+
+    font-size: 3.5vw;
+}
+
+main svccontents div.item p.pop {
+    width: 85%;
+    top: -19vw;
+    left: 50px;
+
+    padding: 3vw;
+    font-size: 3vw;
+}
+
+}
