@@ -17,9 +17,9 @@ Route::get('/welcome', function () {
 
 Route::get('/', 'IndexController@top');
 Route::get('/home', 'HomeController@home')->name('home');
+Route::get('/logs', 'LogsController@logs')->name('logs');
 
 Route::post('/log', 'PostDdbController@postShortText');
-//Route::get('/log', 'GetDdbController@getShortText');
 
 Auth::routes();
 

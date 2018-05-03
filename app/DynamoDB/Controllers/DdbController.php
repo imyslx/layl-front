@@ -6,6 +6,7 @@ date_default_timezone_set('Asia/Tokyo');
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 use Aws\DynamoDb\Exception\DynamoDbException;
 use Aws\DynamoDb\Marshaler;
@@ -18,7 +19,7 @@ class DdbController
 
     public function __construct() {
         $sdk = new Sdk([
-            'endpoint'   => 'http://dynamodb.ap-northeast-1.amazonaws.com',
+            'endpoint' => Config::get('database.connections.dynamodb.endpoint'),
             'region'   => 'ap-northeast-1',
             'version'  => 'latest'
         ]);
@@ -61,7 +62,7 @@ class DdbController
             $result = $this->ddbClient->putItem($param);
             logger()->notice("Added successfully.", $param);
         } catch (DynamoDbException $e) {
-            logger()->critical("Unable to add item.\nMessage: $e->getMessage()", $param);
+            logger()->critical("Unable to add item.\nMessage: ".$e->getMessage(), $param);
         }
         return $result->toArray();
     }
@@ -72,7 +73,7 @@ class DdbController
             $result = $this->ddbClient->getItem($param);
             logger()->notice("Added successfully.", $param);
         } catch (DynamoDbException $e) {
-            logger()->critical("Unable to add item.\nMessage: $e->getMessage()", $param);
+            logger()->critical("Unable to add item.\nMessage: ".$e->getMessage(), $param);
         }
         return $result->toArray();
     }
@@ -94,7 +95,7 @@ class DdbController
             'FilterExpression' => 'content_type = :type',
             'ExpressionAttributeValues'=> $eav,
             'ScanIndexForward' => false,
-            'Limit' => $nLimit
+            'Limit' => (int)$nLimit
         ];
 
         try {
@@ -106,6 +107,7 @@ class DdbController
         } catch (DynamoDbException $e) {
             echo "Unable to query:\n";
             echo $e->getMessage() . "\n";
+            var_dump($params);            
         }
         return $resArray;
     }

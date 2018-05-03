@@ -9,21 +9,12 @@ use App\DynamoDB\Controllers\DdbController;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function home(Request $request)
     {
         $user = Auth::user();
@@ -67,7 +58,6 @@ class HomeController extends Controller
 
         // If cache does not exist, get from DynamoDB .
         if(is_null($shortTexts)) {
-            echo "Access to DDB.";
             $shortTexts = $ddb->queryContents("short_text", $uid,$nLimit);
             foreach($shortTexts as &$st) {
                 $key = $st["owner_id"] . "-" . $st["created_at"];

@@ -23,8 +23,6 @@
             <div class="card">
                 <div class="card-header"> {{ $username }} さんの Dashboard</div>
                 <div class="card-body">
-                    <h5 class="card-title">ようこそ！</h5>
-                    <p class="card-text">今日もいっぱい Log しましょう！</p>
                     <div class="row">
                         <div class="col-6">
                             <ul class="list-group list-group-flush">
