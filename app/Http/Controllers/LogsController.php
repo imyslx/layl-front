@@ -53,7 +53,7 @@ class LogsController extends Controller
         } else {
             $idx = count($shortTexts) - 1;
             $exclusiveStartKey["created_at"]["S"] = $shortTexts[$idx]["created_at"];
-            $exclusiveStartKey["owner_id"]["N"] = $shortTexts[$idx]["owner_id"];
+            $exclusiveStartKey["owner_id"]["N"] = (string)$shortTexts[$idx]["owner_id"];
         }
         logger()->debug("RedisDocs: ".count($shortTexts));
 
