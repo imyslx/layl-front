@@ -55,6 +55,9 @@ class PostDdbController extends BaseController
 
         // Delete cache from redis.
         Redis::del("recent_shortText_" . $uid);
+        Redis::del("shortText_" . $uid);
+        Redis::del("count_shortText_"  . $uid);
+        
         Redis::incr("posts_count_". date("Ymd"). "_" .$uid);
 
         return $result["@metadata"]["statusCode"];

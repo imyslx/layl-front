@@ -1,0 +1,49 @@
+sidebar {
+    display: block;
+}
+
+sidebar .logmenu {
+    font-size: 1.5rem;
+    border-bottom: solid 1px darkslategray;
+}
+
+sidebar li.list-group-item a {
+    margin: 0px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+}
+
+main .describe {
+    font-size: 1.5rem;
+    border-bottom: solid 1px darkslategray;
+}
+
+.triangle {
+    display: block;
+    float: left;
+    width: 0;
+    height: 0;
+    border-top: 0.65rem solid transparent;
+    border-right: 0.6rem solid transparent;
+    border-bottom: 0.65rem solid transparent;
+    border-left: 0.8rem solid #ff8484;
+}
+.triangle-gray {
+    display: block;
+    float: left;
+    width: 0;
+    height: 0;
+    border-top: 0.65rem solid transparent;
+    border-right: 0.6rem solid transparent;
+    border-bottom: 0.65rem solid transparent;
+    border-left: 0.8rem solid #9b9b9b;
+}
+
+sidebar .list-group .list-group-item {
+    border: none;
+    font-size: 1rem;
+    padding: .75rem 0rem .75rem 0.5rem;
+}

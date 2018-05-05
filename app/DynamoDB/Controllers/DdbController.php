@@ -78,37 +78,50 @@ class DdbController
         return $result->toArray();
     }
 
-    public function queryContents($type, $uid, $nLimit) {
-        $resArray = Array();
+    public function queryContents($type, $uid, $nLimit, $exclusiveStartKey = null) {
+        $resArray["contents"] = Array();
 
         $marshaler = new Marshaler();
         $eav = $marshaler->marshalJson('
             {
                 ":uid": '.$uid.',
-                ":type": "'.$type.'"
+                ":type": "'.$type.'",
+                ":deleted_flag": 0
             }
         ');
 
         $params = [
             'TableName' => 'contents',
             'KeyConditionExpression' => 'owner_id = :uid',
-            'FilterExpression' => 'content_type = :type',
+            'FilterExpression' => '(content_type = :type) AND (deleted_flag = :deleted_flag)',
             'ExpressionAttributeValues'=> $eav,
             'ScanIndexForward' => false,
             'Limit' => (int)$nLimit
         ];
 
+        if(! is_null($exclusiveStartKey)) {
+            $params["ExclusiveStartKey"] = $exclusiveStartKey;
+        }
+
         try {
             $result = $this->ddbClient->query($params);
 
-            foreach ($result['Items'] as $item) {
-                $resArray[] = $marshaler->unmarshalItem($item);
+            foreach ($result["Items"] as $item) {
+                $resArray["contents"][] = $marshaler->unmarshalItem($item);
             }
+            $resArray["LastEvaluatedKey"] = $result["LastEvaluatedKey"];
         } catch (DynamoDbException $e) {
             echo "Unable to query:\n";
             echo $e->getMessage() . "\n";
             var_dump($params);            
         }
+
+        $test = $result->toArray();
+        unset($test["Items"]);
+
+        logger()->debug("Count: ". $test["Count"]);
+        logger()->debug("ScannedCount: ". $test["ScannedCount"]);
+        logger()->debug("LastEvaluatedKey", [ $resArray["LastEvaluatedKey"] ]);
         return $resArray;
     }
 
@@ -133,5 +146,54 @@ class DdbController
         }
 
         return $marshaler->unmarshalItem($item["Item"]);
+    }
+
+    public function countContents($type, $uid) {
+        $resArray = Array();
+
+        $marshaler = new Marshaler();
+        $eav = $marshaler->marshalJson('
+            {
+                ":uid": '.$uid.',
+                ":type": "'.$type.'",
+                ":deleted_flag": 0
+            }
+        ');
+
+        $count = 0;
+        $exclusiveStartKey = null;
+        do {
+            $params = [
+                'TableName' => 'contents',
+                'KeyConditionExpression' => 'owner_id = :uid',
+                'FilterExpression' => '(content_type = :type) AND (deleted_flag = :deleted_flag)',
+                'ExpressionAttributeValues'=> $eav,
+                'ScanIndexForward' => false,
+                'Select' => 'COUNT',
+                'Limit' => 5
+            ];
+
+            if(! is_null($exclusiveStartKey)) {
+                $params["ExclusiveStartKey"] = $exclusiveStartKey;
+            }
+
+            try {
+                $result = $this->ddbClient->query($params);
+            } catch (DynamoDbException $e) {
+                echo "Unable to query:\n";
+                echo $e->getMessage() . "\n";
+                var_dump($params);            
+            }
+
+            $resArray = $result->toArray();
+            $count += $result["Count"];
+            if(array_key_exists('LastEvaluatedKey',$resArray)) {
+                $exclusiveStartKey = $result["LastEvaluatedKey"];
+            } else {
+                break;
+            }
+        } while (! is_null($exclusiveStartKey));
+
+        return $count;
     }
 }

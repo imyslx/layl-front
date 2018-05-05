@@ -22,29 +22,34 @@ class ApiController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function getSHortTexts(Request $request)
+    public function getShortTexts(Request $request)
     {
         $user = Auth::user();
         $ddb  = new DdbController();
+
+        $resp = null;
         $size = $request->input("size",5);
+        $mode = $request->input("mode","none");
 
-        $shortTexts = $this->getRecentShortTexts($ddb, $user->id, $size);
+        switch($mode) {
+        case "none":
+            $resp = $this->getRecentShortTexts($ddb, $user->id, $size);
+            break;
+        case "count":
+            $resp = $this->getCountOfShortText($ddb, $user->id);
+            break;
+        }
 
-        return $shortTexts;
+        return $resp;
     }
 
     private function getRecentShortTexts($ddb, $uid, $size) {
         // Get cache from redis.
         $shortTexts = json_decode(Redis::get("recent_shortText_" . $uid), JSON_OBJECT_AS_ARRAY);
-        //echo count($shortTexts) . " : " . $size;
-        // if(count($shortTexts) < $size) {
-        //     $shortTexts = null;
-        // }
 
         // If cache does not exist, get from DynamoDB .
         if(is_null($shortTexts)) {
-            //echo "get from DDB.";
-            $shortTexts = $ddb->queryContents("short_text", $uid,$size);
+            $shortTexts = $ddb->queryContents("short_text", $uid, $size);
             foreach($shortTexts as &$st) {
                 $key = $st["owner_id"] . "-" . $st["created_at"];
                 $item = $ddb->getContentItem("short_text", $key);
@@ -54,6 +59,20 @@ class ApiController extends BaseController
             Redis::set("recent_shortText_" . $uid, json_encode($shortTexts));
         }
         return $shortTexts;
+    }
+
+    private function getCountOfShortText($ddb, $uid) {
+        // Get cache from redis.
+        $count = json_decode(Redis::get("count_shortText_" . $uid), JSON_OBJECT_AS_ARRAY);
+
+        // If cache does not exist, get from DynamoDB .
+        if(is_null($count)) {
+            echo "Connect to DDB !";
+            $count = $ddb->countContents("short_text", $uid);
+            // Set new cache to redis.
+            Redis::set("count_shortText_" . $uid, json_encode($count));
+        }
+        return $count;
     }
 
 }
