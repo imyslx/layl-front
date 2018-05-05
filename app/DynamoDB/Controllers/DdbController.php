@@ -79,6 +79,7 @@ class DdbController
     }
 
     public function queryContents($type, $uid, $nLimit, $exclusiveStartKey = null) {
+        $result = Array();
         $resArray["contents"] = Array();
 
         $marshaler = new Marshaler();
@@ -117,8 +118,6 @@ class DdbController
         }
 
         $test = $result->toArray();
-        unset($test["Items"]);
-
         logger()->debug("Count: ". $test["Count"]);
         logger()->debug("ScannedCount: ". $test["ScannedCount"]);
         logger()->debug("LastEvaluatedKey", [ $resArray["LastEvaluatedKey"] ]);
